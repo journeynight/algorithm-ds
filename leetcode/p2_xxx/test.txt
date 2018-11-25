@@ -1,2 +1,3 @@
 zzl
 bmx
+test pwd conf
