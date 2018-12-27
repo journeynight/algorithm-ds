@@ -6,6 +6,7 @@
 using namespace std;
 class Solution{
     public:
+        //why static can't be removed?
         static bool cmp(const pair<int,string> &p1,const pair<int,string> &p2){
             return p1.first > p2.first;
         }
