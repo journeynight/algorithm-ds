@@ -1,1 +1,89 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+/*
+*memcheck beging
+*/
+//case 1,used uninitalized memory
+
+void case1_used_uninitialized_memory(){
+    int local_uninitalized_var;
+    if(local_uninitalized_var > 1)
+        ++local_uninitalized_var;
+}
+
+//case 2,memory access out of bound
+
+void case2_access_out_of_bound(){
+   int *arr = (int *)malloc(5 * sizeof(int));
+   int i = 0;
+   for(i = 0;i < 5; ++i){
+       arr[i] = i + 1;
+   }
+   int read_out_of_bound = arr[i];
+   arr[i] = 1;
+   free(arr);
+}
+
+//case 3,memory overlap
+
+void case3_memory_overlap(){
+    char src[] = "www.huawei.com";
+    char dest[] = "cisco";
+    strcpy(dest,src);
+}
+
+//case 4,dynamic memory repeated free
+
+void case4_dynamic_memory_repeat_free(){
+    int *arr = (int *)malloc(1 * sizeof(int));
+    free(arr);
+    free(arr);
+}
+
+//case 5,dynamic memory write after free
+
+void case5_dynamic_memory_write_after_free(){
+    int *arr = (int *)malloc(1 * sizeof(int));
+    arr[0] = 1;
+    free(arr);
+    int i = arr[0];
+    arr[0] = 1;
+}
+//case 6,no free  of memory leak
+
+void case6_memory_leak_no_free(){
+    int *arr = (int *)malloc(3 * sizeof(int));
+}
+
+//case 7,re-assignment of memory leak
+
+void case7_memory_leak_reassignment(){
+    char *area = (char *)malloc(7);
+    char *newArea = (char *)malloc(9);
+    area = newArea;
+}
+
+//case 8,use NULL pointer
+
+void case8_use_null_pointer(){
+    int *arr = NULL;
+    arr[0] = 1;
+}
+/*
+ *memcheck end
+*/
+
+int main()
+{
+    case1_used_uninitialized_memory();
+    case2_access_out_of_bound();
+    case3_memory_overlap();
+    case4_dynamic_memory_repeat_free();
+    case5_dynamic_memory_write_after_free();
+    case6_memory_leak_no_free();
+    case7_memory_leak_reassignment();
+    case8_use_null_pointer();
+    return 0;
+}
 
