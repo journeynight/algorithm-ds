@@ -250,3 +250,81 @@ int main()
     cout<<"Depth :"<<tree.GetTreeDepth(tree.root)<<endl;
     return 0;
 }
+
+
+-----------
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <string>
+#include <cmath>
+using namespace std;
+
+void Split(vector<string> &words,string s,string pattern)
+{
+	int sz1 = s.size(),sz2 = pattern.size();
+	if(s.find_last_of(pattern) != sz1)
+		s += pattern;
+	int i = 0,pos;
+	while(i < sz1)
+	{
+		pos = s.find(pattern,i);
+		if(pos != i)
+			words.push_back(s.substr(i,pos - i));
+		i = pos + sz2;
+	}
+}
+string num2bit(int n)
+{
+	string ret = "";
+	while(n)
+	{
+		ret += n % 2 + '0';
+		n /= 2;
+	}
+	reverse(ret.begin(),ret.end());
+	if(ret.size() < 8)
+		ret = string(8 - ret.size(),'0') + ret;
+	cout<<"ret --"<<ret<<endl;
+	return ret;
+}
+unsigned int bit2num(const string &s)
+{
+	unsigned int x = 0;
+	for(auto i = 0;i < s.size();++i)
+		x += pow(2,31 - i) * (s[i] - '0');
+	return x;
+}
+unsigned int Ip2Int(const string &s)
+{
+	vector<int> pos;
+	int i;
+	for(i = 0;i < s.size();++i)
+	{
+		if(s[i] == '.')
+			pos.push_back(i);
+	}
+	vector<int> nums;
+	nums.push_back(stoi(s.substr(0,pos[0])));
+	for(i = 1;i < pos.size();++i)
+	{
+		int tmp = stoi(s.substr(pos[i - 1] + 1,pos[i] - pos[i - 1] - 1));
+		if(tmp >= 0 && tmp <= 255)
+			nums.push_back(tmp);
+	}
+	string bits = "";
+	for(i = 0;i < nums.size();++i)
+		bits += num2bit(nums[i]);
+	cout<<bits.size()<<"--"<<bits<<endl;
+	return bit2num(bits);
+} 
+int main()
+{
+	string s;
+	int n;
+	while(cin >> s >>n)
+	{
+		cout << Ip2Int(s);
+	}
+	return 0;
+} 
