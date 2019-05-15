@@ -7,7 +7,6 @@ class BTNode{
         T val;
         BTNode<T> *right;
         BTNode<T> *left;
-        BTNode<T> *parent;//for bst
         BTNode():val(T()),right(nullptr),left(nullptr)
         {
 
